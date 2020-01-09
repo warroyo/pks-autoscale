@@ -9,7 +9,7 @@ NEW_SIZE=$((CURRENT_SIZE + 1))
 
 echo "current cluster size is $CURRENT_SIZE nodes; increasing to $NEW_SIZE nodes"
 
-pks resize $CLUSTER -n $NEW_SIZE --wait --non-interactive
+#pks resize $CLUSTER -n $NEW_SIZE --wait --non-interactive
 
 
 
