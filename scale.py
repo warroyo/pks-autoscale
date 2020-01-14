@@ -32,7 +32,7 @@ cert = (cert_file_path, key_file_path)
 #query promethues for memory consumption
 response = requests.get(prometheus + '/api/v1/query',
   params={
-    'query': 'sum (kubernetes_node_memory_working_set_bytes{ cluster_name=~"^{cluster}"}) / sum (kubernetes_node_memory_available_bytes{ cluster_name=~"^{cluster}"}) * 100'.format(cluster=cluster)
+    'query': 'sum (kubernetes_node_memory_working_set_bytes{ cluster_name=~"^'+cluster+'"}) / sum (kubernetes_node_memory_available_bytes{ cluster_name=~"^'+cluster+'"}) * 100'
 }, cert=cert, verify=False)
 
 #parse the results for the value
