@@ -43,8 +43,32 @@ in order to connect to PKS and prom we need an environment file .
 2. fill in each variable with the correct values, you can find descriptions for each var in the section below called "docker image usage"
 
 
+# Running Continuosly
 
-## create a Jenkins job
+## on k8s
+
+this example uses k8s cronjobs to run the autoscale script ona  schedule. we will be using a `cronjob` and a `secret`*
+
+1. update the schedule in the `manifest.yml` to your liking 
+2. update the image if you are hosting internally ona  registry
+3. be sure that your env.vars file is update
+4. create the secret from the `env.vars`
+   ```
+    kubectl create secret generic autoscale --from-env-file env.vars
+   ```
+5. apply the manifest to k8s
+
+    ```
+    kubectl apply -f manifest.yml
+    ```
+
+
+
+
+
+\* **we are using a standard k8s secret for simplicity in this example. In prod you should be using something more secure(Vault,sealec secrets, etc.)**
+
+## a Jenkins job
 
 we will create a jenkins job to schedule out script to be run. you can use any  CI to do this or even run it inside of a k8s cluster on a schedule.
 
