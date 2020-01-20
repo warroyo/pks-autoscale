@@ -1,0 +1,31 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pks-autoscale
+  name: pks-autoscale
+spec:
+  concurrencyPolicy: Allow
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            run: pks-autoscale
+        spec:
+          containers:
+          - image: warroyo90/pks-autoscale:1.6
+            name: pks-autoscale
+            envFrom:
+            - secretRef:
+                name: autoscale
+          restartPolicy: Never
+  schedule: '*/10 * * * *'
+status: {}
+
+
+

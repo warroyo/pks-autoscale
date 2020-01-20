@@ -1,11 +1,11 @@
 # AutoScaling Example for PKS
 
-this is a script and accompanying docker image that can be run on a schedule to autoscale PKS clusters based on memory usage percentage. the script could be modified to scale based on anything you want. this simply queryies a promethues cluster and then runs scale commands based on thresholds and max and min workers. This example used jenkins to schedule the run every 10 mins. 
+this is a script and accompanying docker image that can be run on a schedule to autoscale PKS clusters based on memory usage percentage. the script could be modified to scale based on anything you want. this simply queryies a promethues cluster and then runs scale commands based on thresholds and max and min workers. 
 
 ## Pre-reqs
 
 * PKS cluster
-* Jenkins(other ci tools can be used here as well)
+* Jenkins(other ci tools can be used here as well) or k8s cluster for running on a schedule
 * prometheus monitoring cluster(I am using Reliability View for PKS)
 * Docker
 
