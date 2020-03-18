@@ -6,7 +6,8 @@ metadata:
     run: pks-autoscale
   name: pks-autoscale
 spec:
-  concurrencyPolicy: Allow
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 60
   jobTemplate:
     metadata:
       creationTimestamp: null
@@ -23,6 +24,13 @@ spec:
             envFrom:
             - secretRef:
                 name: autoscale
+            resources:
+              requests:
+                memory: "64Mi"
+                cpu: "250m"
+              limits:
+                memory: "256Mi"
+                cpu: "500m"
           restartPolicy: Never
   schedule: '*/10 * * * *'
 status: {}
