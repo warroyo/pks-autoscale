@@ -78,4 +78,4 @@ elif memory_percent <= lower_threshold and current_workers > min_workers:
                      universal_newlines=True)
     print(pks_scale_down.stdout)
 else:
-    print("not scaling up or down, current cluster size is {current_workers}(max workers: {max_workers} min workers: {min_workers}  ) and memory is {memory_percent} percent".format(memory_percent=str(memory_percent), current_workers=str(current_workers)) )
+    print("not scaling up or down, current cluster size is {current_workers} (max workers: {max_workers} min workers: {min_workers}  ) and memory is {memory_percent} percent".format(memory_percent=str(memory_percent), current_workers=str(current_workers),max_workers=str(max_workers),min_workers=str(min_workers)) )
