@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pks-test
+spec:
+  containers:
+  - image: warroyo90/pks-autoscale:1.7
+    name: pks-autoscale
+    envFrom:
+    - secretRef:
+        name: autoscale
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo hello; sleep 10;done"]
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "256Mi"
+        cpu: "500m"
+  restartPolicy: Never

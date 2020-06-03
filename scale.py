@@ -9,6 +9,7 @@ import os
 
 pks_api =  os.getenv('PKS_API') #'api.pks.<your-domain>'
 cluster =  os.getenv('CLUSTER') #cluster name
+query = os.getenv('PROM_QUERY') #prom query to run
 client_secret =  os.getenv('CLIENT_SECRET') #automated client secret
 client = os.getenv('CLIENT') #automated client name
 prometheus = os.getenv('PROM') #promethues server
@@ -32,7 +33,7 @@ cert = (cert_file_path, key_file_path)
 #query promethues for memory consumption
 response = requests.get(prometheus + '/api/v1/query',
   params={
-    'query': 'sum (kubernetes_node_memory_working_set_bytes{ cluster_name=~"^'+cluster+'"}) / sum (kubernetes_node_memory_available_bytes{ cluster_name=~"^'+cluster+'"}) * 100'
+    'query': query
 }, cert=cert, verify=False)
 
 #parse the results for the value
@@ -59,7 +60,7 @@ current_workers = int(worker_json['parameters']['kubernetes_worker_instances'])
 scale_up_size = current_workers + 1
 scale_down_size = current_workers - 1
 
-if memory_percent >= upper_threshold and current_workers != max_workers:
+if memory_percent >= upper_threshold and current_workers < max_workers:
     print("scaling up cluster memory greater than {upper_threshold} percent".format(upper_threshold=upper_threshold))
     pks_scale_up = subprocess.run(['pks', 'resize', cluster ,'-n',str(scale_up_size),'--non-interactive'],
                      stdout=subprocess.PIPE, 
@@ -68,7 +69,7 @@ if memory_percent >= upper_threshold and current_workers != max_workers:
                      universal_newlines=True)
     print(pks_scale_up.stdout)
 
-elif memory_percent <= lower_threshold and current_workers != min_workers:
+elif memory_percent <= lower_threshold and current_workers > min_workers:
     print("scaling down cluster memory less than {lower_threshold} percent".format(lower_threshold=lower_threshold))
     pks_scale_down = subprocess.run(['pks', 'resize', cluster ,'-n',str(scale_down_size),'--non-interactive'],
                      stdout=subprocess.PIPE, 
@@ -77,4 +78,4 @@ elif memory_percent <= lower_threshold and current_workers != min_workers:
                      universal_newlines=True)
     print(pks_scale_down.stdout)
 else:
-    print("not scaling up or down, current cluster size is {current_workers} and memory is {memory_percent} percent".format(memory_percent=str(memory_percent), current_workers=str(current_workers)) )
+    print("not scaling up or down, current cluster size is {current_workers}(max workers: {max_workers} min workers: {min_workers}  ) and memory is {memory_percent} percent".format(memory_percent=str(memory_percent), current_workers=str(current_workers)) )
