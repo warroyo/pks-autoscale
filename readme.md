@@ -86,7 +86,7 @@ we will create a jenkins job to schedule out script to be run. you can use any  
 #!/bin/bash
 set -ex
 
-docker run --rm --env-file=$ENV_VARS warroyo90/pks-autoscale:1.6
+docker run --rm --env-file=$ENV_VARS warroyo90/pks-autoscale:1.1.0
 ```
 
 8. save the job
@@ -112,6 +112,7 @@ environment vars:
 * `LOWER_THRESHOLD` - default `30` , memory usage percent to scale down at
 * `PROM_CERT` - no default, the client cert needed for prom auth. 
 * `PROM_KEY` - no default, the client key needed for prom auth
+* `PROM_QUERY` - no default, the query to use for getting memory info from prometheus
 
 an example env vars file that is used below can be found in this repo. `env.vars`
 
@@ -119,11 +120,11 @@ an example env vars file that is used below can be found in this repo. `env.vars
 
 run:
 
-`docker run -it --rm --env-file=env.vars warroyo90/pks-autoscale:1.6`
+`docker run -it --rm --env-file=env.vars warroyo90/pks-autoscale:1.1.0`
 
 ## Building the docker image
 
-the dockerfile in this repo will create an image with PKS and Python. all of the dependencies needed to run the scipt. this is how you build it, you can also use a pre-built image at `warroyo90/pks-autoscale:1.6`
+the dockerfile in this repo will create an image with PKS and Python. all of the dependencies needed to run the scipt. this is how you build it, you can also use a pre-built image at `warroyo90/pks-autoscale:1.1.0`
 
 1. copy the pks token template
 

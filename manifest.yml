@@ -19,7 +19,7 @@ spec:
             run: pks-autoscale
         spec:
           containers:
-          - image: warroyo90/pks-autoscale:1.7
+          - image: warroyo90/pks-autoscale:1.1.0
             name: pks-autoscale
             envFrom:
             - secretRef:
