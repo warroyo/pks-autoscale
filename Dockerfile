@@ -10,8 +10,9 @@ RUN --mount=type=secret,id=pivnet_token \
  && apk add curl jq \
  && rm -rf /var/cache/apk/* \
  && ACCESS=$(curl -X POST https://network.pivotal.io/api/v2/authentication/access_tokens -d '{"refresh_token":"'$(cat /run/secrets/pivnet_token)'"}' | jq -r .access_token) \
- && curl -v -L -o /usr/local/bin/pks -X GET https://network.pivotal.io/api/v2/products/pivotal-container-service/releases/613165/product_files/646536/download -H "Authorization: Bearer $ACCESS"  \
- && chmod +x /usr/local/bin/pks \
+ && curl -v -L -o /usr/local/bin/tkgi -X GET https://network.pivotal.io/api/v2/products/pivotal-container-service/releases/863377/product_files/921855/download -H "Authorization: Bearer $ACCESS"  \
+ && chmod +x /usr/local/bin/tkgi \
+ && cp  /usr/local/bin/tkgi /usr/local/bin/pks \
  && pip install -r requirements.txt 
 
 
