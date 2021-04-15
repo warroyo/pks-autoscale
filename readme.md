@@ -86,7 +86,7 @@ we will create a jenkins job to schedule out script to be run. you can use any  
 #!/bin/bash
 set -ex
 
-docker run --rm --env-file=$ENV_VARS warroyo90/pks-autoscale:1.1.0
+docker run --rm --env-file=$ENV_VARS warroyo90/pks-autoscale:1.2.0
 ```
 
 8. save the job
@@ -120,11 +120,11 @@ an example env vars file that is used below can be found in this repo. `env.vars
 
 run:
 
-`docker run -it --rm --env-file=env.vars warroyo90/pks-autoscale:1.1.0`
+`docker run -it --rm --env-file=env.vars warroyo90/pks-autoscale:1.2.0`
 
 ## Building the docker image
 
-the dockerfile in this repo will create an image with PKS and Python. all of the dependencies needed to run the scipt. this is how you build it, you can also use a pre-built image at `warroyo90/pks-autoscale:1.1.0`
+the dockerfile in this repo will create an image with PKS and Python. all of the dependencies needed to run the scipt. this is how you build it, you can also use a pre-built image at `warroyo90/pks-autoscale:1.2.0`
 
 1. copy the pks token template
 

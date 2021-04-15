@@ -4,7 +4,7 @@ metadata:
   name: pks-test
 spec:
   containers:
-  - image: warroyo90/pks-autoscale:1.1.0
+  - image: warroyo90/pks-autoscale:1.2.0
     name: pks-autoscale
     envFrom:
     - secretRef:
