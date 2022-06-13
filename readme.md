@@ -86,7 +86,7 @@ we will create a jenkins job to schedule out script to be run. you can use any  
 #!/bin/bash
 set -ex
 
-docker run --rm --env-file=$ENV_VARS warroyo90/pks-autoscale:1.2.0
+docker run --rm --env-file=$ENV_VARS warroyo90/pks-autoscale:1.3.0
 ```
 
 8. save the job
@@ -108,11 +108,14 @@ environment vars:
 * `PROM` - no default, prometheus server ex. https://prometheus.com:4449
 * `MIN_WORKERS` - default `3` , number of workers that it should never go below
 * `MAX_WORKERS` - default `10` , number of workers that it should never go above
-* `UPPER_THRESHOLD` - default `70` , memory usage percent to scale up at
-* `LOWER_THRESHOLD` - default `30` , memory usage percent to scale down at
+* `UPPER_CPU_THRESHOLD` - default `70` , CPU usage percent to scale up at
+* `LOWER_CPU_THRESHOLD` - default `30` , CPU usage percent to scale down at
+* `UPPER_MEM_THRESHOLD` - default `70` , memory usage percent to scale up at
+* `LOWER_MEM_THRESHOLD` - default `30` , memory usage percent to scale down at
 * `PROM_CERT` - no default, the client cert needed for prom auth. 
 * `PROM_KEY` - no default, the client key needed for prom auth
-* `PROM_QUERY` - no default, the query to use for getting memory info from prometheus
+* `PROM_MEM_QUERY` - no default, the query to use for getting memory info from prometheus
+* `PROM_CPU_QUERY` - no default, the query to use for getting CPU info from prometheus
 
 an example env vars file that is used below can be found in this repo. `env.vars`
 
