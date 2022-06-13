@@ -1,12 +1,12 @@
 # AutoScaling Example for PKS
 
-this is a script and accompanying docker image that can be run on a schedule to autoscale PKS clusters based on memory usage percentage. the script could be modified to scale based on anything you want. this simply queryies a promethues cluster and then runs scale commands based on thresholds and max and min workers. 
+this is a script and accompanying docker image that can be run on a schedule to autoscale PKS clusters based on memory or cpu % usage. the script could be modified to scale based on anything you want. this simply queryies a promethues cluster and then runs scale commands based on thresholds and max and min workers. 
 
 ## Pre-reqs
 
 * PKS cluster
 * Jenkins(other ci tools can be used here as well) or k8s cluster for running on a schedule
-* prometheus monitoring cluster(I am using Reliability View for PKS)
+* prometheus monitoring cluster(I am using Healthwatch for PKS)
 * Docker
 
 ## Create PKS Service Account
@@ -28,10 +28,10 @@ we will need a service account to authenticate to PKS. we will create this in UA
 
 ## Obtaining Required Promethues info
 
-when using reliability view you can get the prometheus info from opsman.
+when using healthwatch you can get the prometheus info from opsman.
 
-* prometheus server - reliability view tile -> status -> TSDB . prometheus will be on that IP on port `4449`
-* prometheus client cert & key - reliability view tile -> credentials -> Tsdb Client Mtls. there will be two values in this entry. these will be used below in the `env.vars` file.
+* prometheus server -Healthwatch tile -> status -> TSDB . prometheus will be on that IP on port `4450`
+* prometheus client cert & key - Healthwatch tile -> credentials -> Tsdb Client Mtls. there will be two values in this entry. these will be used below in the `env.vars` file.
 
 ## Create the env vars file
 
@@ -105,7 +105,7 @@ environment vars:
 * `CLUSTER` - no default, PKS cluster name
 * `CLIENT_SECRET` - no default, PKS client secret
 * `CLIENT` - no default, PKS client name
-* `PROM` - no default, prometheus server ex. https://prometheus.com:4449
+* `PROM` - no default, prometheus server ex. https://prometheus.com:4450
 * `MIN_WORKERS` - default `3` , number of workers that it should never go below
 * `MAX_WORKERS` - default `10` , number of workers that it should never go above
 * `UPPER_CPU_THRESHOLD` - default `70` , CPU usage percent to scale up at
@@ -123,11 +123,11 @@ an example env vars file that is used below can be found in this repo. `env.vars
 
 run:
 
-`docker run -it --rm --env-file=env.vars warroyo90/pks-autoscale:1.2.0`
+`docker run -it --rm --env-file=env.vars warroyo90/pks-autoscale:1.3.0`
 
 ## Building the docker image
 
-the dockerfile in this repo will create an image with PKS and Python. all of the dependencies needed to run the scipt. this is how you build it, you can also use a pre-built image at `warroyo90/pks-autoscale:1.2.0`
+the dockerfile in this repo will create an image with PKS and Python. all of the dependencies needed to run the scipt. this is how you build it, you can also use a pre-built image at `warroyo90/pks-autoscale:1.3.0`
 
 1. copy the pks token template
 
